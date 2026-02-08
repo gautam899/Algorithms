@@ -1,0 +1,2 @@
+Use 2heaps. A min and a max.  Idea is to divide the stream half into two half. Left half will always contain smaller elements and right half will contain larger elements. We need a way to  be able to find the max from the left half and the min from the right half in O(1). This is where we think about priority queue. Left half in a maxHeap and right half in a minHeap. 
+1. Making sure the left half MaxH always contain smaller element then the minH and the size b/w the two heaps is atmost 1 at all times.
