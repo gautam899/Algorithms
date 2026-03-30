@@ -12,20 +12,35 @@ struct TreeNode {
 
 class Solution {
 public:
-    void helper(TreeNode* root, std::vector<int>& ans) {
-        if(!root) {
-            return;
-        }
-
-        if(root->left)helper(root->left, ans);
-        ans.push_back(root->val);
-        if(root->right)helper(root->right, ans);
-    }
-
     std::vector<int> inorderTraversal(TreeNode* root) {
-        // One way to do this it to use recursion.
+        // Inspired by https://www.educative.io/answers/what-is-morris-traversal
         std::vector<int> ans;
-        helper(root, ans);
+        if(root == NULL){
+            return ans;
+        }
+        // Morris order traversal
+        TreeNode* curr = root;
+        TreeNode* prev;
+        while(curr != NULL){
+            if(curr->left == NULL){
+                ans.push_back(curr->val);
+                curr = curr->right;
+            } else {
+                prev = curr->left;
+                while(prev->right != NULL && prev->right != curr){
+                    prev = prev->right;
+                }
+
+                if(prev->right == NULL){
+                    prev->right = curr;
+                    curr = curr->left;
+                } else {
+                    prev->right = NULL;
+                    ans.push_back(curr->val);
+                    curr = curr->right;
+                }
+            }
+        }
         return ans;
     }
 };
