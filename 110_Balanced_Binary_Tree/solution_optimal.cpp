@@ -17,6 +17,7 @@ public:
   int helper(TreeNode *root) {
     if (!root)
       return 0;
+    // Keep going to the left and right using dfs.
     int ld = helper(root->left);
     int rd = helper(root->right);
     if (ld == -1 || rd == -1)
