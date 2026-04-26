@@ -11,6 +11,10 @@ struct TreeNode
     TreeNode(int val, TreeNode *left, TreeNode *right) : val(val), left(nullptr), right(nullptr) {};
 };
 
+// The intution behind iterative solution is to use a stack to replicate the dfs approach. It's like
+// expanding the verification from mid to the end. We start with push the first left and right onto the stack
+// and then while comparing, we always compare two nodes at a time from the top of the stack and at a time
+// we compare the (left,right) and (right,left) of the nodes.
 class Solution
 {
 public:
