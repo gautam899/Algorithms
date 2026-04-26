@@ -39,4 +39,8 @@ int main()
 {
     // TODO: Create a Binary Tree.
     return 0;
+    // Time Complexity: Every node is visited once and a constant time operation is performed
+    // on each node, hence the time complexity is O(N).
+    // Space Complexity: Auxiliary stack space of O(H) where H is the height of the tree.
+    // Worst Case: O(N) for skewed tree and best case O(LogN) for balanced tree.
 }
