@@ -18,56 +18,37 @@ struct TreeNode
 class Operations
 {
 public:
-    TreeNode *_find_successor(TreeNode *root)
+    void BST_insert(TreeNode *root, int key)
     {
-        while (root->left)
+        TreeNode *y = nullptr;
+        while (root)
         {
-            root = root->left;
+            y = root;
+            if (key < root->val)
+            {
+                root = root->left;
+            }
+            else
+            {
+                root = root->right;
+            }
         }
-        return root;
-        // When finding successor, we are not considering if the root has a right or not(before calling this function).
-        // The reason is this function is only getting called only in case of the node having two children, so we
-        // do not have to consider parent node not have a right child
-    }
-    TreeNode *_deleteNode(TreeNode *root, int key)
-    {
-        if (!root)
-            return nullptr;
-
-        if (key < root->val)
+        // At this moments the root is at null and y point to the node next to which the new node
+        // needs to be attached.
+        TreeNode *new_node = new TreeNode(key);
+        new_node->parent = y;
+        if (!y)
         {
-            root->left = _deleteNode(root->left, key);
+            root = new_node;
         }
-        else if (key > root->val)
+        else if (new_node->val < y->val)
         {
-            root->right = _deleteNode(root->right, key);
+            y->left = new_node;
         }
         else
         {
-            // Found the key.
-            // For the key node having 0 or 1 children
-            if (!root->left) // If the root's left is null, point the temp to root's right. The root's right could be null or could not be null depending upon
-            // whether the node has zero or one child.
-            {
-                TreeNode *temp = root->right;
-                delete (root);
-                return temp;
-            }
-
-            if (!root->right)
-            {
-                TreeNode *temp = root->left;
-                delete (root);
-                return temp;
-            }
-
-            // If the node have two children. Find the inorder successor i.e smallest value larger than the root->val
-            TreeNode *succ = _find_successor(root->right);
-            // Replace the root->val with succ->val. Now we delete succ->val which will lie in either one of the above case.
-            root->val = succ->val;
-            root->right = _deleteNode(root->right, succ->val);
+            y->right = new_node;
         }
-        return root;
     }
 };
 
@@ -111,11 +92,12 @@ int main()
     node5->right = node8;
     node3->right = node6;
     node6->left = node9;
+
     print_inorder(node1);
     std::cout << "\n";
-    TreeNode *ans = op._deleteNode(node1, 8);
-    print_inorder(node1);
+    op.BST_insert(node1, 5);
     std::cout << "\n";
+    print_inorder(node1);
     return 0;
     // Time complexity O(H). This is because we are only only going either left or right. In the worst case
     // We go from root to leaf which is the height of the tree.
