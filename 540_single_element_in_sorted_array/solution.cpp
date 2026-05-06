@@ -29,6 +29,7 @@ public:
                 mid--;
             }
 
+	    // If the first occurence is on even index, then the single element has not occurred yet. move to the right.
             if(nums[mid] == nums[mid+1]){
                 // on the right
                 l = mid+2;
