@@ -1,35 +1,42 @@
 #include <iostream>
-#include <climits> // or limits.h
+#include <stack>
+#include <unordered_map>
+
 struct TreeNode
 {
     int val;
     TreeNode *left;
     TreeNode *right;
     TreeNode *parent;
-    // Constructor for root node.
-    TreeNode(int val = 0, TreeNode *parent = nullptr) : val(val), left(nullptr), right(nullptr), parent(parent) {};
-    // For non-leaf node.
+    // Constructor for root node
+    TreeNode(int val = 0, TreeNode *parent = nullptr) : val(val), parent(parent) {};
+    // Constructor for the non-root node.
     TreeNode(int val, TreeNode *left, TreeNode *right, TreeNode *parent) : val(val), left(left), right(right), parent(parent) {};
 };
 
-class Operations
+class Solution
 {
 public:
-    bool _validate_BST(TreeNode *root, long minimum, long maximum)
+    bool helper(TreeNode *root, int k, std::unordered_map<int, int> &mp)
     {
         if (!root)
-            return true;
-        if (!(root->val > minimum && root->val < maximum))
             return false;
-
-        return _validate_BST(root->left, minimum, root->val) && _validate_BST(root->right, root->val, maximum);
+        if (mp.find(k - root->val) != mp.end())
+            return true;
+        mp[root->val]++;
+        return helper(root->left, k, mp) || helper(root->right, k, mp);
+    }
+    bool findTarget(TreeNode *root, int k)
+    {
+        if (!root)
+            return false;
+        std::unordered_map<int, int> mp;
+        return helper(root, k, mp);
     }
 };
 
 int main()
 {
-    Operations op;
-
     TreeNode *node1 = new TreeNode(8, nullptr);
     TreeNode *node2 = new TreeNode(3, nullptr, nullptr, node1);
     TreeNode *node3 = new TreeNode(10, nullptr, nullptr, node1);
@@ -48,6 +55,9 @@ int main()
     node3->right = node6;
     node6->left = node9;
 
-    bool ans = op._validate_BST(node1, LONG_MIN, LONG_MAX);
+    Solution op;
+    TreeNode *root = node1;
+    bool ans = op.findTarget(root, 9);
+    // (ans) ? std::cout << "Ceil: " << ans->val : std::cout << "Not Found\n";
     return 0;
 }
