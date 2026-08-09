@@ -14,10 +14,8 @@ public:
         int n = coins.size();
         std::vector<unsigned long long> curr(amount + 1, 0);
         std::vector<unsigned long long> next(amount + 1, 0);
-        for (int i = 0; i <= n; i++)
-        {
-            curr[0] = 1; // If the amount is zero, there is always 1 way
-        }
+        curr[0] = 1; // If the amount is zero, there is always 1 way
+        next[0] = 1;
 
         for (int idx = n - 1; idx >= 0; idx--)
         {

@@ -20,6 +20,7 @@ class Solution
 public:
     bool helper(TreeNode *root)
     {
+        // In the iterative approach we are only considering the false case.
         std::stack<TreeNode *> st;
         if (root->left)
         {
@@ -35,6 +36,7 @@ public:
 
         while (!st.empty())
         {
+            // Take the top two nodes and compare them.
             TreeNode *left = st.top();
             st.pop();
             TreeNode *right = st.top();
@@ -44,16 +46,17 @@ public:
 
             if (left->left)
             {
-                if (!right->right)
+                if (!right->right) // If left's left is not null but right's right is
                     return false;
                 st.push(left->left);
                 st.push(right->right);
             }
-            else if (right->right)
+            else if (right->right) // If left's left is null but right's right is not.
             {
                 return false;
             }
 
+            // Opossite of the above.
             if (left->right)
             {
                 if (!right->left)
