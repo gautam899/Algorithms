@@ -14,6 +14,7 @@ struct TreeNode
 class Solution
 {
 public:
+    // The idea is to use the morris order traversal to create links in inorder fashion and traverse in a preorder fashion.
     std::vector<int> inorderTraversal(TreeNode *root)
     {
         // Inspired by https://www.educative.io/answers/what-is-morris-traversal
