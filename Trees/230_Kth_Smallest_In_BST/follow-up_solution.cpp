@@ -56,36 +56,23 @@ int compute_size(TreeNode *root)
     return root->subtree_size;
 }
 
-/*
 // Insert node: Alternate
-TreeNode *prev = nullptr;
 TreeNode *insert(TreeNode *root, int key)
 {
     if (!root)
     {
-        TreeNode *node = new TreeNode(key);
-        node->parent = prev;
-        if (!prev)
-        {
-            root = node;
-        }
-        else if (node->val < prev->val)
-        {
-            prev->left = node;
-        }
-        else
-        {
-            prev->right = node;
-        }
+        return new TreeNode(key);
     }
-    prev = root;
+
     if (key < root->val)
     {
         root->left = insert(root->left, key);
+        root->left->parent = root;
     }
     else
     {
         root->right = insert(root->right, key);
+        root->right->parent = root;
     }
 
     root->subtree_size = 1 +
@@ -97,7 +84,7 @@ TreeNode *insert(TreeNode *root, int key)
                               : 0);
     return root;
 }
-*/
+
 int main()
 {
     Operations op;
