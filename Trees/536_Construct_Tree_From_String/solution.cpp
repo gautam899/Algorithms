@@ -47,7 +47,7 @@ public:
         int parenthesisCount = 0;
         int startPosition = firstParenthesis;
 
-        // Start iterating to left starting from the start position
+        // Start iterating from left to right starting from the start position
         for (size_t i = startPosition; i < s.size(); i++)
         {
             if (s[i] == '(')
